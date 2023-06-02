@@ -50,6 +50,8 @@ for i in whole:
 
 def pd_dataframe():
     df = pd.DataFrame(dct)
+    # print(df)
+
     for index, rows in df.iterrows():
         tables.insert_records(d_date=rows['Deal Date'], security_code=rows['Security Code'],
                               security_name=rows['Security Name'], client_name=rows['Client Name'],

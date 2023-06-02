@@ -13,7 +13,7 @@ app = FastAPI()
 
 @app.get("/")
 def init_fnc():
-    db_conn.database_connection("sql_database", "root", "sundar@123", "emp_db")
+    db_conn.database_connection(tables.host_nme, "root", "sundar@123", "emp_db")
     # tables.create_user_table()  # creating User table for users
     tables.create_customer_table()  # creating Customer table for scraper list
 
@@ -21,9 +21,9 @@ def init_fnc():
 
 
 @app.get("/list")
-def user_show(res: list):
+def user_show():
     try:
-        result = res
+        result = tables.show_table_records()
         return {"message": result}
     except Exception as err:
         return {"message": str(err)}
