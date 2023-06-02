@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  python_app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=sql_database
+      - DB_PORT=3306
+      - DB_NAME=emp_db
+      - DB_USER=root
+      - DB_PASSWORD=sundar@123
+
+  sql_database:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=sundar@123
+      - MYSQL_DATABASE=emp_db
