@@ -1,27 +1,14 @@
-import pathlib
-import sys
-
-cr_path = pathlib.Path(__file__).parent.resolve()
-sys.path.append(str(cr_path))
-
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from bs4 import BeautifulSoup
-import time
-import pandas as pd
 import tables
+import pandas as pd
+from bs4 import BeautifulSoup
+from requests_html import HTMLSession
 
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-chromedriver_path = f"{cr_path}/chromedriver/chromedriver.exe"
-driver = webdriver.Chrome(chromedriver_path, options=chrome_options)
-driver.get("https://www.bseindia.com/markets/equity/EQReports/bulk_deals.aspx")
-time.sleep(7)
-page_source = driver.page_source
-driver.quit()
+session = HTMLSession()
 
-soup = BeautifulSoup(page_source, "html.parser")
+reqst = session.get('https://www.bseindia.com/markets/equity/EQReports/bulk_deals.aspx')
+reqst_text = reqst.text
+
+soup = BeautifulSoup(reqst_text, "html.parser")
 table = soup.find("table", {"id": "ContentPlaceHolder1_gvbulk_deals"})
 dct = dict()
 for row in table.findAll('tr', attrs={'class': 'tableheading'}):
@@ -50,7 +37,6 @@ for i in whole:
 
 def pd_dataframe():
     df = pd.DataFrame(dct)
-    # print(df)
 
     for index, rows in df.iterrows():
         tables.insert_records(d_date=rows['Deal Date'], security_code=rows['Security Code'],

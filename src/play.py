@@ -1,6 +1,7 @@
-import pathlib
-import sys
-cr_path = pathlib.Path(__file__).parent.resolve()
-sys.path.append(str(cr_path))
+from requests_html import HTMLSession
 
-print(f"{cr_path}\\chromedriver\\chromedriver.exe")
+session = HTMLSession()
+
+reqst = session.get('https://www.bseindia.com/markets/equity/EQReports/bulk_deals.aspx')
+
+print(reqst.text)

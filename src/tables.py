@@ -42,7 +42,6 @@ def insert_records(**values):
 
     query = f"insert into customers (deal_date, security_code, security_name, client_name, deal_type, quantity, price)" \
             f" values {values['d_date'], values['security_code'], values['security_name'], values['client_name'], values['deal_type'], values['quantity'], values['price']}"
-    print(query)
 
     cursor.execute(query)
     my_db.commit()
@@ -57,7 +56,6 @@ def update_records(**values):
             f"security_name='{values['security_name']}', client_name='{values['client_name']}'," \
             f"deal_type='{values['deal_type']}', quantity='{values['quantity']}', price='{values['price']}' WHERE " \
             f"security_code = '{values['sec_code']}'"
-    print(query)
 
     cursor.execute(query)
     my_db.commit()
@@ -69,7 +67,6 @@ def delete_records(value):
     cursor = my_db.cursor()
 
     query = f"DELETE FROM customers WHERE security_code = {value}"
-    print(query)
 
     cursor.execute(query)
     my_db.commit()

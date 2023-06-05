@@ -2,5 +2,5 @@ fastapi
 uvicorn
 mysql-connector-python
 pandas
-selenium
 beautifulsoup4
+requests-html
